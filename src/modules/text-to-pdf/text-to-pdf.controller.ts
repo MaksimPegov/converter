@@ -11,24 +11,4 @@ export class TextToPdfController {
   create(@Body() createTextToPdfDto: CreateTextToPdfDto) {
     return this.textToPdfService.create(createTextToPdfDto);
   }
-
-  @Get()
-  findAll() {
-    return this.textToPdfService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.textToPdfService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTextToPdfDto: UpdateTextToPdfDto) {
-    return this.textToPdfService.update(+id, updateTextToPdfDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.textToPdfService.remove(+id);
-  }
 }
