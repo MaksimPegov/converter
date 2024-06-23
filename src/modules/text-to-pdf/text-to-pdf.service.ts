@@ -8,7 +8,10 @@ export class TextToPdfService  implements OnModuleInit, OnModuleDestroy {
   private _browser: Browser;
 
   public async onModuleInit(): Promise<void> {
-    this._browser = await puppeteer.launch();
+    this._browser = await puppeteer.launch({
+          args: ['--no-sandbox'],
+        }
+    );
   }
 
   public async onModuleDestroy(): Promise<void> {
