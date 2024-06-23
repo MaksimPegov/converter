@@ -1,7 +1,6 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, StreamableFile, Header, Res} from '@nestjs/common';
 import {TextToPdfService} from './text-to-pdf.service';
 import {CreateTextToPdfDto} from './dto/create-text-to-pdf.dto';
-import {UpdateTextToPdfDto} from './dto/update-text-to-pdf.dto';
 import {ApiTags} from "@nestjs/swagger";
 
 @ApiTags('Text To PDF controller')
@@ -11,7 +10,14 @@ export class TextToPdfController {
     }
 
     @Post()
-    create(@Body() createTextToPdfDto: CreateTextToPdfDto) {
-        return this.textToPdfService.create(createTextToPdfDto);
+    @Header('Access-Control-Expose-Headers', '*')
+    @Header('Content-Type', 'application/pdf')
+    async create(
+        @Body() createTextToPdfDto: CreateTextToPdfDto,
+        @Res({ passthrough: true }) res: Response
+    ): Promise<StreamableFile> {
+        const { buffer, fileName } = await this.textToPdfService.convertTextToPdf(createTextToPdfDto.text);
+        res.headers.set('Content-Disposition', `attachment; filename="${fileName}".pdf`);
+        return new StreamableFile(buffer);
     }
 }
