@@ -8,10 +8,10 @@ async function bootstrap() {
 
   app.enableCors()
   const config = new DocumentBuilder()
-      .setTitle('Cenverter')
-      .setDescription('The cenverter API description')
+      .setTitle('Converter')
+      .setDescription('The converter API description')
       .setVersion('1.0')
-      .addTag('cenverter')
+      .addTag('converter')
       .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
